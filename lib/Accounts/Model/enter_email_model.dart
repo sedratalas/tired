@@ -39,7 +39,7 @@ class CreateEmailModel {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('accessToken');
 
-    final response = await http.put(
+    final response = await http.post(
       Uri.parse('$baseURL/api/setEmail'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',

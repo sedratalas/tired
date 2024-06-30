@@ -12,7 +12,7 @@ class CreatePassModel {
     final accessToken = prefs.getString('accessToken');
     print('setnew$accessToken');
 
-    final response = await http.put(
+    final response = await http.post(
       Uri.parse('$baseURL/api/setNewPassword'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',

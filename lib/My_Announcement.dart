@@ -70,11 +70,11 @@ class MyAnnouncementPage extends StatelessWidget {
                                     ),
                                     Align(
                                       alignment: Alignment.topRight,
-                                      child: IconButton(
-                                        icon: Icon(Icons.edit),
-                                        onPressed: () {
+                                      child: GestureDetector(
+                                        onTap:() {
                                           _showEditDialog(context, announcement);
-                                        },
+                                          },
+                                          child: SvgPicture.asset('assets/icon/edit.svg')
                                       ),
                                     ),
                                   ],
@@ -95,6 +95,56 @@ class MyAnnouncementPage extends StatelessWidget {
     );
   }
 
+  // void _showEditDialog(BuildContext context, Announcement announcement) {
+  //   final titleController = TextEditingController(text: announcement.title);
+  //   final descriptionController = TextEditingController(text: announcement.description);
+  //   final serviceIDController = TextEditingController(text: announcement.serviceID.toString());
+  //
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         title: Text('Edit Announcement'),
+  //         content: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             TextField(
+  //               controller: titleController,
+  //               decoration: InputDecoration(labelText: 'Title'),
+  //             ),
+  //             TextField(
+  //               controller: descriptionController,
+  //               decoration: InputDecoration(labelText: 'Description'),
+  //             ),
+  //             TextField(
+  //               controller: serviceIDController,
+  //               decoration: InputDecoration(labelText: 'Service ID'),
+  //               keyboardType: TextInputType.number,
+  //             ),
+  //           ],
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => Navigator.of(context).pop(),
+  //             child: Text('Cancel'),
+  //           ),
+  //           TextButton(
+  //             onPressed: () {
+  //               announcementController.updateAnnouncement(
+  //                 announcement.id,
+  //                 titleController.text,
+  //                 descriptionController.text,
+  //                 int.parse(serviceIDController.text),
+  //               );
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: Text('Save'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
   void _showEditDialog(BuildContext context, Announcement announcement) {
     final titleController = TextEditingController(text: announcement.title);
     final descriptionController = TextEditingController(text: announcement.description);
@@ -130,16 +180,22 @@ class MyAnnouncementPage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                announcementController.updateAnnouncement(
-                  announcement.id,
-                  titleController.text,
-                  descriptionController.text,
-                  int.parse(serviceIDController.text),
-                );
-                Navigator.of(context).pop();
+                if (titleController.text.isNotEmpty || descriptionController.text.isNotEmpty) {
+                  announcementController.updateAnnouncement(
+                    announcement.id,
+                    titleController.text.isNotEmpty ? titleController.text : null,
+                    descriptionController.text.isNotEmpty ? descriptionController.text : null,
+                    serviceIDController.text.isNotEmpty ? int.parse(serviceIDController.text) : null,
+                  );
+                  Navigator.of(context).pop();
+                } else {
+                  // يمكن عرض رسالة خطأ هنا
+                  print('you have to fill one at least');
+                }
               },
-              child: Text('Save'),
-            ),
+              child: Text('Update'),
+            )
+
           ],
         );
       },

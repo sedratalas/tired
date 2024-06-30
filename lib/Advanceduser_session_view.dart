@@ -136,6 +136,10 @@ class Advanced_session_view extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            Container(
+                              padding: EdgeInsets.only(left: 20 ,bottom:20 ),
+                              child:Icon(Icons.qr_code, color: Colors.black),
+                            ),
                           ],
                         ),
                         Row(
@@ -543,265 +547,265 @@ class Advanced_session_view extends StatelessWidget {
 }*/
 //////////////
 
-class LectureDoc extends StatelessWidget {
-  final List<String> colors = [
-    '#FF8B3A', // لون العنصر الأول
-    '#BFB9FD', // لون العنصر الثاني
-    '#77B8A1', // لون العنصر الثالث
-  ];
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      extendBody: true,
-      appBar: AppBar(
-        backgroundColor: Color(0xffffffff),
-        // elevation: 0,
-        leading: Icon(Icons.arrow_back),
-      ),
-      body: Stack(
-        children: [
-          Container(
-            child: Positioned(
-              left: 0,
-              top: 0,
-              child: SvgPicture.asset(
-                'assets/Ellipse.svg',
-                colorBlendMode: BlendMode.srcOver,
-                // استخدم نفس اللون ولكن بشفافية أكبر
-              ),
-            ),
-          ),
-          ListView.builder(
-            itemCount: null, // عدد العناصر غير محدد
-            itemBuilder: (context, index) {
-              // تحديد لون العنصر بناء على فهرسه في القائمة
-              Color containerColor = Color(int.parse(colors[index % 3].substring(1, 7), radix: 16) + 0xFF000000);
-              Color svgColor = containerColor.withOpacity(0.5); // زيادة شفافية اللون لجعله أفتح
-              Color lighterColor = containerColor.withOpacity(0.7); // تقليل شفافية اللون لجعله أفتح بـ 3 درجات
-
-              return Padding(
-                padding: const EdgeInsets.only(left: 35, top: 15),
-                child: Stack(
-                  alignment: AlignmentDirectional.topStart,
-                  children: [
-                    Container(
-                      width: 330,
-                      height: 215,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(28),
-                        color: lighterColor, // لون العنصر أفتح بـ 3 درجات
-                      ),
-                      child: Row (children: [],),
-                    ),
-                    Container(
-                      child: Positioned(
-                        left: 0,
-                        top: 0,
-                        child: SvgPicture.asset(
-                          'assets/Intersect.svg',
-                          height: 100,
-                          width: 70,
-                          color: svgColor,
-                          // استخدم نفس اللون ولكن بشفافية أكبر
-                        ),
-                      ),
-                    ),
-                    Row(children: [
-                      Column(children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 30, top: 15),
-                          child: Text(
-                            '01',
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 24, // تعيين حجم الخط إلى 24 نقطة
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 30,),
-                          child: Text(
-                            'Status',
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ],),
-                      SizedBox(width: 50, ),
-                      Column(children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 15, top: 10),child: Text(
-                          'Introduction',
-                          textAlign: TextAlign.left,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24, // تعيين حجم الخط إلى 24 نقطة
-                          ),
-                        ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(right: 40,),
-                          child: Text(
-                            'Dr.Ammar',
-                            textAlign: TextAlign.left,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(right: 40,),
-                          child: Text(
-                            'Description',
-                            textAlign: TextAlign.left,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ],),
-                      Container(
-                        padding: EdgeInsets.only(left: 20 ,bottom:20 ),
-                        child:Icon(Icons.qr_code, color: Colors.black),
-                      ),
-
-                    ],),
-                    SizedBox(height: 30,),
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 210 , top: 150 ),
-                          child: IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              // الإجراء الذي يتم تنفيذه عند الضغط على أيقونة الحذف
-                            },
-
-                          ),
-                        ),
-                        //  SizedBox(width: 10,),
-                        GestureDetector(
-                          child: Container(
-                            padding: EdgeInsets.only(top: 150),
-                            child:IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                // الإجراء الذي يتم تنفيذه عند الضغط على أيقونة الحذف
-                              },),
-                          ),),
-                      ],
-                    ),
-                    Column(children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 0,top: 110),
-                            child: IconButton(
-                              icon: Icon(Icons.play_circle_filled, color: Colors.black) ,// أيقونة تشغيل الفيديو
-                              onPressed: () {
-                                // هنا يمكنك وضع الإجراء الذي يتم تنفيذه عند الضغط على الأيقونة
-                                // مثلاً، فتح مشغل الفيديو أو تشغيل فيديو معين
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 15,),
-                          Container(
-                            padding: EdgeInsets.only(left: 0,top: 110),
-                            child:Icon(Icons.pause_circle_filled, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 10,),
-                            child: Text(
-                              'Start',
-                              textAlign: TextAlign.left,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-
-                          ),
-                          SizedBox(width: 40,),
-                          Container(
-                            padding: EdgeInsets.only(top:0),
-                            child:Text(
-                              'End',
-                              textAlign: TextAlign.start,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(height: 5,),
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(left: 10 , bottom: 20),
-                                child: Text(
-                                  '08:30',
-                                  textAlign: TextAlign.left,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 30,),
-                              Container(
-                                padding: EdgeInsets.only(left: 5,bottom: 20),
-                                child:Text(
-                                  '10:30',
-                                  textAlign: TextAlign.left,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],)
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-
-
-
-
-
-
-    );
-
-  }
-}
+// class Advanced_public_session_view extends StatelessWidget {
+//   final List<String> colors = [
+//     '#FF8B3A', // لون العنصر الأول
+//     '#BFB9FD', // لون العنصر الثاني
+//     '#77B8A1', // لون العنصر الثالث
+//   ];
+//   @override
+//   Widget build(BuildContext context) {
+//     return  Scaffold(
+//       extendBody: true,
+//       appBar: AppBar(
+//         backgroundColor: Color(0xffffffff),
+//         // elevation: 0,
+//         leading: Icon(Icons.arrow_back),
+//       ),
+//       body: Stack(
+//         children: [
+//           Container(
+//             child: Positioned(
+//               left: 0,
+//               top: 0,
+//               child: SvgPicture.asset(
+//                 'assets/Ellipse.svg',
+//                 colorBlendMode: BlendMode.srcOver,
+//                 // استخدم نفس اللون ولكن بشفافية أكبر
+//               ),
+//             ),
+//           ),
+//           ListView.builder(
+//             itemCount: null, // عدد العناصر غير محدد
+//             itemBuilder: (context, index) {
+//               // تحديد لون العنصر بناء على فهرسه في القائمة
+//               Color containerColor = Color(int.parse(colors[index % 3].substring(1, 7), radix: 16) + 0xFF000000);
+//               Color svgColor = containerColor.withOpacity(0.5); // زيادة شفافية اللون لجعله أفتح
+//               Color lighterColor = containerColor.withOpacity(0.7); // تقليل شفافية اللون لجعله أفتح بـ 3 درجات
+//
+//               return Padding(
+//                 padding: const EdgeInsets.only(left: 35, top: 15),
+//                 child: Stack(
+//                   alignment: AlignmentDirectional.topStart,
+//                   children: [
+//                     Container(
+//                       width: 330,
+//                       height: 215,
+//                       decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(28),
+//                         color: lighterColor, // لون العنصر أفتح بـ 3 درجات
+//                       ),
+//                       child: Row (children: [],),
+//                     ),
+//                     Container(
+//                       child: Positioned(
+//                         left: 0,
+//                         top: 0,
+//                         child: SvgPicture.asset(
+//                           'assets/Intersect.svg',
+//                           height: 100,
+//                           width: 70,
+//                           color: svgColor,
+//                           // استخدم نفس اللون ولكن بشفافية أكبر
+//                         ),
+//                       ),
+//                     ),
+//                     Row(children: [
+//                       Column(children: [
+//                         Container(
+//                           padding: EdgeInsets.only(left: 30, top: 15),
+//                           child: Text(
+//                             '01',
+//                             textAlign: TextAlign.center,
+//                             maxLines: 2,
+//                             overflow: TextOverflow.ellipsis,
+//                             style: TextStyle(
+//                               color: Colors.black,
+//                               fontSize: 24, // تعيين حجم الخط إلى 24 نقطة
+//                             ),
+//                           ),
+//                         ),
+//                         Container(
+//                           padding: EdgeInsets.only(left: 30,),
+//                           child: Text(
+//                             'Status',
+//                             textAlign: TextAlign.center,
+//                             maxLines: 2,
+//                             overflow: TextOverflow.ellipsis,
+//                             style: TextStyle(
+//                               color: Colors.black,
+//                             ),
+//                           ),
+//                         ),
+//                       ],),
+//                       SizedBox(width: 50, ),
+//                       Column(children: [
+//                         Container(
+//                           padding: EdgeInsets.only(left: 15, top: 10),child: Text(
+//                           'Introduction',
+//                           textAlign: TextAlign.left,
+//                           maxLines: 2,
+//                           overflow: TextOverflow.ellipsis,
+//                           style: TextStyle(
+//                             color: Colors.black,
+//                             fontSize: 24, // تعيين حجم الخط إلى 24 نقطة
+//                           ),
+//                         ),
+//                         ),
+//                         Container(
+//                           padding: EdgeInsets.only(right: 40,),
+//                           child: Text(
+//                             'Dr.Ammar',
+//                             textAlign: TextAlign.left,
+//                             maxLines: 2,
+//                             overflow: TextOverflow.ellipsis,
+//                             style: TextStyle(
+//                               color: Colors.black,
+//                             ),
+//                           ),
+//                         ),
+//                         Container(
+//                           padding: EdgeInsets.only(right: 40,),
+//                           child: Text(
+//                             'Description',
+//                             textAlign: TextAlign.left,
+//                             maxLines: 2,
+//                             overflow: TextOverflow.ellipsis,
+//                             style: TextStyle(
+//                               color: Colors.black,
+//                             ),
+//                           ),
+//                         ),
+//                       ],),
+//                       Container(
+//                         padding: EdgeInsets.only(left: 20 ,bottom:20 ),
+//                         child:Icon(Icons.qr_code, color: Colors.black),
+//                       ),
+//
+//                     ],),
+//                     SizedBox(height: 30,),
+//                     Row(
+//                       children: [
+//                         Container(
+//                           padding: EdgeInsets.only(left: 210 , top: 150 ),
+//                           child: IconButton(
+//                             icon: Icon(Icons.edit),
+//                             onPressed: () {
+//                               // الإجراء الذي يتم تنفيذه عند الضغط على أيقونة الحذف
+//                             },
+//
+//                           ),
+//                         ),
+//                         //  SizedBox(width: 10,),
+//                         GestureDetector(
+//                           child: Container(
+//                             padding: EdgeInsets.only(top: 150),
+//                             child:IconButton(
+//                               icon: Icon(Icons.delete),
+//                               onPressed: () {
+//                                 // الإجراء الذي يتم تنفيذه عند الضغط على أيقونة الحذف
+//                               },),
+//                           ),),
+//                       ],
+//                     ),
+//                     Column(children: [
+//                       Row(
+//                         children: [
+//                           Container(
+//                             padding: EdgeInsets.only(left: 0,top: 110),
+//                             child: IconButton(
+//                               icon: Icon(Icons.play_circle_filled, color: Colors.black) ,// أيقونة تشغيل الفيديو
+//                               onPressed: () {
+//                                 // هنا يمكنك وضع الإجراء الذي يتم تنفيذه عند الضغط على الأيقونة
+//                                 // مثلاً، فتح مشغل الفيديو أو تشغيل فيديو معين
+//                               },
+//                             ),
+//                           ),
+//                           SizedBox(width: 15,),
+//                           Container(
+//                             padding: EdgeInsets.only(left: 0,top: 110),
+//                             child:Icon(Icons.pause_circle_filled, color: Colors.black),
+//                           ),
+//                         ],
+//                       ),
+//                       Row(
+//                         children: [
+//                           Container(
+//                             padding: EdgeInsets.only(left: 10,),
+//                             child: Text(
+//                               'Start',
+//                               textAlign: TextAlign.left,
+//                               maxLines: 2,
+//                               overflow: TextOverflow.ellipsis,
+//                               style: TextStyle(
+//                                 color: Colors.black,
+//                               ),
+//                             ),
+//
+//                           ),
+//                           SizedBox(width: 40,),
+//                           Container(
+//                             padding: EdgeInsets.only(top:0),
+//                             child:Text(
+//                               'End',
+//                               textAlign: TextAlign.start,
+//                               maxLines: 2,
+//                               overflow: TextOverflow.ellipsis,
+//                               style: TextStyle(
+//                                 color: Colors.black,
+//                               ),
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                       // SizedBox(height: 5,),
+//                       Row(
+//                         children: [
+//                           Row(
+//                             children: [
+//                               Container(
+//                                 padding: EdgeInsets.only(left: 10 , bottom: 20),
+//                                 child: Text(
+//                                   '08:30',
+//                                   textAlign: TextAlign.left,
+//                                   maxLines: 2,
+//                                   overflow: TextOverflow.ellipsis,
+//                                   style: TextStyle(
+//                                     color: Colors.black,
+//                                   ),
+//                                 ),
+//                               ),
+//                               SizedBox(width: 30,),
+//                               Container(
+//                                 padding: EdgeInsets.only(left: 5,bottom: 20),
+//                                 child:Text(
+//                                   '10:30',
+//                                   textAlign: TextAlign.left,
+//                                   maxLines: 2,
+//                                   overflow: TextOverflow.ellipsis,
+//                                   style: TextStyle(color: Colors.black,
+//                                   ),
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ],
+//                       ),
+//                     ],)
+//                   ],
+//                 ),
+//               );
+//             },
+//           ),
+//         ],
+//       ),
+//
+//
+//
+//
+//
+//
+//     );
+//
+//   }
+// }

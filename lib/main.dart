@@ -15,7 +15,7 @@ import 'Accounts/View/enter_email.dart';
 import 'Accounts/forget_password/change_password.dart';
 import 'Accounts/forget_password/forgetpassword_enter_email.dart';
 import 'Accounts/login.dart';
-import 'Add_Interview_Session_doc.dart';
+import 'AdvancedPrivateReservationsView.dart';
 import 'AdvancedUser/screens/home_page.dart';
 import 'NewAnnouncement.dart';
 import 'announcment.dart';
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
       }),
       home: HomeScreen(),
       routes: {
-        '/add': (context) => AddAnnouncementPage(),
+        //'/add': (context) => AddAnnouncementPage(),
         '/saved': (context) => SavedAnnouncementPage(),
       },
     );
@@ -68,23 +68,29 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.bookmark),
-            onPressed: () {
-              Get.toNamed('/saved');
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              Get.to(MyAnnouncementPage());
-            },
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text('Home'),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(Icons.bookmark),
+      //       onPressed: () {
+      //         Get.toNamed('/saved');
+      //       },
+      //     ),
+      //     IconButton(
+      //       icon: Icon(Icons.person),
+      //       onPressed: () {
+      //         Get.to(MyAnnouncementPage());
+      //       },
+      //     ),
+      //     IconButton(
+      //       icon: Icon(Icons.add),
+      //       onPressed: () {
+      //         Get.to(()=> AnnouncementPage());
+      //       },
+      //     ),
+      //   ],
+      // ),
       body: Log_in(),
 
     );

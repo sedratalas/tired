@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../globals.dart';
 import '../model/Newannouncement_model.dart';
@@ -41,7 +43,37 @@ class AnnouncementController extends GetxController {
       });
     }
   }
-
+//دهب
+  // void fetchAnnouncements() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final accessToken = prefs.getString('accessToken');
+  //   try {
+  //     isLoading(true);
+  //     var response = await http.get(
+  //       Uri.parse('$baseURL/api/announcement/showAll/'),
+  //       headers: {
+  //         'Authorization': 'Bearer $accessToken',
+  //       },
+  //     );
+  //     if (response.statusCode == 200) {
+  //       print('announcement');
+  //       var jsonData = json.decode(response.body);
+  //       if (jsonData != null) {
+  //         announcements.value = (jsonData as List).map((i) => Announcement.fromJson(i)).toList();
+  //         updateSavedStatus(); // تأكد من تحديث حالة الإعلانات بعد تحميلها
+  //       } else {
+  //         announcements.value = [];
+  //
+  //       }
+  //     } else {
+  //       print(response.body);
+  //       Get.snackbar('Error', 'Failed to fetch announcements');
+  //
+  //     }
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
   void fetchAnnouncements() async {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('accessToken');
@@ -54,18 +86,19 @@ class AnnouncementController extends GetxController {
         },
       );
       if (response.statusCode == 200) {
+        print('announcement');
         var jsonData = json.decode(response.body);
         if (jsonData != null) {
+          // طباعة البيانات المستلمة للتحقق من معلومات الملفات
+          print('Response Data: $jsonData');
           announcements.value = (jsonData as List).map((i) => Announcement.fromJson(i)).toList();
           updateSavedStatus(); // تأكد من تحديث حالة الإعلانات بعد تحميلها
         } else {
           announcements.value = [];
-
         }
       } else {
         print(response.body);
         Get.snackbar('Error', 'Failed to fetch announcements');
-
       }
     } finally {
       isLoading(false);
@@ -83,7 +116,9 @@ class AnnouncementController extends GetxController {
           'Authorization': 'Bearer $accessToken',
         },
       );
+      print('i am in');
       if (response.statusCode == 200) {
+        print('saved');
         var jsonData = json.decode(response.body);
         if (jsonData != null) {
           savedAnnouncements.assignAll((jsonData as List).map((i) => SavedAnnouncement.fromJson(i)).toList());
@@ -92,6 +127,7 @@ class AnnouncementController extends GetxController {
           savedAnnouncements.value = [];
         }
       } else {
+        print(response.body);
         Get.snackbar('Error', 'Failed to fetch saved announcements');
       }
     } finally {
@@ -159,7 +195,7 @@ class AnnouncementController extends GetxController {
           if (announcements[i].savedAnnouncementID == savedAnnouncementID) {
             announcements[i].isSaved = false;
             announcements[i].savedAnnouncementID = null;
-            announcements[i] = announcements[i]; // Force UI update
+            announcements[i] = announcements[i];
           }
         }
 
@@ -173,7 +209,37 @@ class AnnouncementController extends GetxController {
     }
   }
 
-  Future<void> addAnnouncement(String title, String description, int serviceID) async {
+  // Future<void> addAnnouncement(String title, String description, int serviceID) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final accessToken = prefs.getString('accessToken');
+  //   try {
+  //     var response = await http.post(
+  //       Uri.parse('$baseURL/api/announcement/add/'),
+  //       headers: {
+  //         'Authorization': 'Bearer $accessToken',
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: json.encode({
+  //         'title': title,
+  //         'description': description,
+  //         'serviceID': serviceID,
+  //       }),
+  //     );
+  //     if (response.statusCode == 200) {
+  //       print('200');
+  //       var jsonData = json.decode(response.body);
+  //       var newAnnouncement = Announcement.fromJson(jsonData);
+  //       myAnnouncements.add(newAnnouncement);
+  //       fetchAnnouncements(); // لتحديث قائمة الإعلانات العامة
+  //     } else{
+  //       print(response.body);
+  //     }
+  //   } catch (e) {
+  //
+  //     print("Error adding announcement: $e");
+  //   }
+  // }
+  /*Future<void> addAnnouncement(String title, String description, int serviceID) async {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('accessToken');
     try {
@@ -189,16 +255,133 @@ class AnnouncementController extends GetxController {
           'serviceID': serviceID,
         }),
       );
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
       if (response.statusCode == 200) {
-        var jsonData = json.decode(response.body);
+        print('200');
+        if (response.body.isNotEmpty) {
+          var jsonData = json.decode(response.body);
+          var newAnnouncement = Announcement.fromJson(jsonData);
+          myAnnouncements.add(newAnnouncement);
+          fetchAnnouncements(); // لتحديث قائمة الإعلانات العامة
+        } else {
+          print("Error: Empty response body");
+        }
+      } else {
+        print(response.body);
+      }
+    } catch (e) {
+      print("Error adding announcement: $e");
+    }
+  }*/
+//add without file
+//   Future<void> addAnnouncement(String title, String description, int? serviceID) async {
+//     final prefs = await SharedPreferences.getInstance();
+//     final accessToken = prefs.getString('accessToken');
+//     try {
+//       final Map<String, dynamic> body = {
+//         if (title.isNotEmpty) 'title': title,
+//         if (description.isNotEmpty) 'description': description,
+//         if (serviceID != null) 'serviceID': serviceID,
+//       };
+//
+//       var response = await http.post(
+//         Uri.parse('$baseURL/api/announcement/add/'),
+//         headers: {
+//           'Authorization': 'Bearer $accessToken',
+//           "Content-Type": "application/json",
+//         },
+//         body: json.encode(body),
+//       );
+//
+//       print('Response status: ${response.statusCode}');
+//       print('Response body: ${response.body}');
+//
+//       if (response.statusCode == 200) {
+//         print('200');
+//         if (response.body.isNotEmpty) {
+//           var jsonData = json.decode(response.body) as Map<String, dynamic>;
+//           var newAnnouncement = Announcement.fromJson(jsonData);
+//           myAnnouncements.add(newAnnouncement);
+//           fetchAnnouncements(); // لتحديث قائمة الإعلانات العامة
+//         } else {
+//           print("Error: Empty response body");
+//         }
+//       } else {
+//         print(response.body);
+//       }
+//     } catch (e) {
+//       print("Error adding announcement: $e");
+//     }
+//   }
+  Future<void> addAnnouncement(String title, String description, int? serviceID, PlatformFile? file) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('accessToken');
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse('$baseURL/api/announcement/add/'));
+      request.headers['Authorization'] = 'Bearer $accessToken';
+      request.headers['Content-Type'] = 'multipart/form-data';
+
+      if (title.isNotEmpty) request.fields['title'] = title;
+      if (description.isNotEmpty) request.fields['description'] = description;
+      if (serviceID != null) request.fields['serviceID'] = serviceID.toString();
+      if (file != null) {
+        request.files.add(await http.MultipartFile.fromPath('file', file.path!));
+      }
+
+      var response = await request.send();
+      var responseBody = await response.stream.bytesToString();
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: $responseBody');
+
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(responseBody) as Map<String, dynamic>;
         var newAnnouncement = Announcement.fromJson(jsonData);
         myAnnouncements.add(newAnnouncement);
         fetchAnnouncements(); // لتحديث قائمة الإعلانات العامة
+      } else {
+        print('Error: $responseBody');
       }
     } catch (e) {
       print("Error adding announcement: $e");
     }
   }
+
+  /*Future<void> addAnnouncement(String title, String description, int? serviceID, PlatformFile? file) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('accessToken');
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse('$baseURL/api/announcement/add/'));
+      request.headers['Authorization'] = 'Bearer $accessToken';
+      request.headers['Content-Type'] = 'multipart/form-data';
+
+      if (title.isNotEmpty) request.fields['title'] = title;
+      if (description.isNotEmpty) request.fields['description'] = description;
+      if (serviceID != null) request.fields['serviceID'] = serviceID.toString();
+      if (file != null) {
+        request.files.add(await http.MultipartFile.fromPath('file', file.path!));
+      }
+
+      var response = await request.send();
+      var responseBody = await response.stream.bytesToString();
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: $responseBody');
+
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(responseBody) as Map<String, dynamic>;
+        var newAnnouncement = Announcement.fromJson(jsonData);
+        myAnnouncements.add(newAnnouncement);
+        fetchAnnouncements(); // لتحديث قائمة الإعلانات العامة
+      } else {
+        print('Error: $responseBody');
+      }
+    } catch (e) {
+      print("Error adding announcement: $e");
+    }
+  }*/
+
 
   void fetchMyAnnouncements() async {
     final prefs = await SharedPreferences.getInstance();
@@ -206,7 +389,7 @@ class AnnouncementController extends GetxController {
     try {
       isLoading(true);
       var response = await http.get(
-        Uri.parse('$baseURL/api/announcement/showMy/'),
+        Uri.parse('$baseURL/api/announcement/showMy'),
         headers: {
           'Authorization': 'Bearer $accessToken',
         },
@@ -225,7 +408,7 @@ class AnnouncementController extends GetxController {
       isLoading(false);
     }
   }
-  Future<void> updateAnnouncement(int id, String title, String description, int serviceID) async {
+  /*Future<void> updateAnnouncement(int id, String title, String description, int serviceID) async {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('accessToken');
     try {
@@ -288,7 +471,61 @@ class AnnouncementController extends GetxController {
     } catch (e) {
       Get.snackbar('Error', 'An error occurred while trying to update the announcement');
     }
+  }*/
+  Future<void> updateAnnouncement(int id, String? title, String? description, int? serviceID) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('accessToken');
+    try {
+      final Map<String, dynamic> body = {
+        if (title != null && title.isNotEmpty) 'title': title,
+        if (description != null && description.isNotEmpty) 'description': description,
+        if (serviceID != null) 'serviceID': serviceID,
+      };
+
+      var response = await http.put(
+        Uri.parse('$baseURL/api/announcement/update/$id'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          "Content-Type": "application/json",
+        },
+        body: json.encode(body),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        print('200');
+        if (response.body.isNotEmpty) {
+          var responseBody = json.decode(response.body);
+          if (responseBody is Map<String, dynamic>) {
+            var updatedAnnouncement = Announcement.fromJson(responseBody);
+            int index = myAnnouncements.indexWhere((a) => a.id == id);
+            if (index != -1) {
+              myAnnouncements[index] = updatedAnnouncement;
+              fetchAnnouncements(); // لتحديث قائمة الإعلانات العامة
+            }
+          } else if (responseBody is bool && responseBody == true) {
+            // التعامل مع الحالة التي تعيد فيها الاستجابة `true`
+            fetchAnnouncements(); // لتحديث قائمة الإعلانات العامة
+            print("Announcement updated successfully");
+          } else {
+            print("Error: Unexpected response format");
+          }
+        } else {
+          print("Error: Empty response body");
+        }
+      } else {
+        print('Error: ${response.body}');
+      }
+    } catch (e) {
+      print("Error updating announcement: $e");
+    }
   }
+
+
+
+
 
 
 }

@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tired/search.dart';
 import 'package:tired/service_view.dart';
 
-import 'Add_Interview_Session_doc.dart';
+import 'AdvancedPrivateReservationsView.dart';
+import 'My_Announcement.dart';
+import 'NewAnnouncement.dart';
 import 'NewSub.dart';
 import 'controllers/FavoriteCategory.dart';
 import 'controllers/ServiceController.dart';
@@ -43,12 +45,34 @@ class home_page extends StatelessWidget {
             Get.to(()=> ServiceView());
           },
         ),
-        actions: [
-          IconButton(
-            icon: SvgPicture.asset('assets/icon/notification.svg'),
-            onPressed: () {},
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: SvgPicture.asset('assets/icon/notification.svg'),
+        //     onPressed: () {},
+        //   ),
+        // ],
+
+          actions: [
+            IconButton(
+              icon: Icon(Icons.bookmark),
+              onPressed: () {
+                Get.toNamed('/saved');
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () {
+                Get.to(MyAnnouncementPage());
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.announcement),
+              onPressed: () {
+                Get.to(()=> AnnouncementPage());
+              },
+            ),
+          ],
+
       ),
       backgroundColor: Color(0xFF292D3D),
       body: SingleChildScrollView(
@@ -82,7 +106,7 @@ class home_page extends StatelessWidget {
                             contentPadding: EdgeInsets.only(left: 50),
                           ),
                           onSubmitted: (query) {
-                            Get.to(() => SearchResultsPage(query: query));
+                          //  Get.to(() => SearchResultsPage(query: query));
                           },
                         ),
                       ),
@@ -156,9 +180,9 @@ class home_page extends StatelessWidget {
                                       Text(
                                         category.name,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color:Color(0xFF292D3D),),
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                         '${category.serviceYear}',
                                         textAlign: TextAlign.center,

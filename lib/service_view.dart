@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:tired/Advanced_public_session.dart';
+import 'package:tired/Exam_view.dart';
 import 'package:tired/student_session_view.dart';
+import 'Activity_view.dart';
 import 'Advanceduser_session_view.dart';
 import 'advanced_users_of_service.dart';
 import 'controllers/ServiceController.dart';
@@ -34,6 +37,7 @@ class ServiceView extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     serviceController.fetchServices('activities');
+                    Get.to(() => Activity_view());
                   },
                   child: Text('Activity', style: TextStyle(color: Colors.white)),
                 ),
@@ -46,6 +50,7 @@ class ServiceView extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     serviceController.fetchServices('exams');
+                    Get.to(() => Exam_view());
                   },
                   child: Text('Exams', style: TextStyle(color: Colors.white)),
                 ),
@@ -54,7 +59,7 @@ class ServiceView extends StatelessWidget {
           ),
         ),
       ),
-      body: Obx(() {
+     /* body: Obx(() {
         if (serviceController.isLoading.value) {
           return Center(child: CircularProgressIndicator());
         } else if (serviceController.services.isEmpty) {
@@ -72,8 +77,8 @@ class ServiceView extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     int serviceId = service['id'];
-                    serviceController.fetch_general_Sessions(serviceId);
-                    Get.to(() => Advanced_session_view(), arguments: serviceId);
+                    serviceController.fetchPublicSessions(serviceId);
+                    Get.to(() => Advanced_public_session_view(), arguments: serviceId);
                   },
                   child: Container(
                     width: double.infinity,
@@ -95,23 +100,23 @@ class ServiceView extends StatelessWidget {
                           subtitle: Text(child['serviceDescription']),
                           onTap: () {
                             int childServiceId = child['id'];
-                            serviceController.fetch_general_Sessions(childServiceId);
-                            Get.to(() => Advanced_session_view(), arguments: childServiceId);
+                            serviceController.fetchPublicSessions(childServiceId);
+                            Get.to(() => Advanced_public_session_view(), arguments: childServiceId);
                           },
                         );
                       }).toList(),
                     )
                         : ListTile(
-                      leading: SvgPicture.asset(
+                        leading: SvgPicture.asset(
                         'assets/icon/code.svg',
                         color: Color(0xFF292D3D),
                       ),
-                      title: Text(service['serviceName']),
-                      subtitle: Text(service['serviceDescription']),
+                        title: Text(service['serviceName']),
+                        subtitle: Text(service['serviceDescription']),
                       onTap: () {
                         int serviceId = service['id'];
-                        serviceController.fetch_general_Sessions(serviceId);
-                        Get.to(() => Advanced_session_view(), arguments: serviceId);
+                        serviceController.fetchPublicSessions(serviceId);
+                        Get.to(() => Advanced_public_session_view(), arguments: serviceId);
                       },
                     ),
                   ),
@@ -120,7 +125,7 @@ class ServiceView extends StatelessWidget {
             },
           );
         }
-      }),
+      }),*/
     );
   }
 }

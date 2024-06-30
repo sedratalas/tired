@@ -237,18 +237,59 @@ class SavedAnnouncement {
 // }
 //
 //
+//////////////////////////////////////////////
+// class Announcement {
+//   final int id;
+//   int? serviceID;
+//   final int userID;
+//   final String title;
+//   final String description;
+//   String? createdAt;
+//   String? updatedAt;
+//   Service? service;
+//   bool isSaved;
+//   int? savedAnnouncementID;
+//
+//   Announcement({
+//     required this.id,
+//     this.serviceID,
+//     required this.userID,
+//     required this.title,
+//     required this.description,
+//     this.createdAt,
+//     this.updatedAt,
+//     this.service,
+//     this.isSaved = false,
+//     this.savedAnnouncementID,
+//   });
+//
+//   factory Announcement.fromJson(Map<String, dynamic> json) {
+//     return Announcement(
+//       id: json['id'],
+//       serviceID: json['serviceID'] as int?,
+//       userID: json['userID'],
+//       title: json['title'],
+//       description: json['description'],
+//       createdAt: json['created_at'],
+//       updatedAt: json['updated_at'],
+//       service: json['service'] != null ? Service.fromJson(json['service']) : null,
+//       isSaved: json['isSaved'] ?? false,
+//       savedAnnouncementID: json['savedAnnouncementID'] as int?,
+//     );
+//   }
+// }
 class Announcement {
   final int id;
-   int? serviceID;
+  int? serviceID;
   final int userID;
   final String title;
   final String description;
-   String? createdAt;
-   String? updatedAt;
-   Service? service;
+  String? createdAt;
+  String? updatedAt;
+  Service? service;
   bool isSaved;
   int? savedAnnouncementID;
-
+  List<FileStored>? files;
   Announcement({
     required this.id,
     this.serviceID,
@@ -260,23 +301,73 @@ class Announcement {
     this.service,
     this.isSaved = false,
     this.savedAnnouncementID,
+    this.files,
   });
 
+  // factory Announcement.fromJson(Map<String, dynamic> json) {
+  //   return Announcement(
+  //     id: json['id'],
+  //     serviceID: json['serviceID'] as int?,
+  //     userID: json['userID'],
+  //     title: json['title'] ?? '', // استخدم قيمة افتراضية
+  //     description: json['description'] ?? '', // استخدم قيمة افتراضية
+  //     createdAt: json['created_at'] ?? '', // تأكد من أن هذه القيم ليست فارغة
+  //     updatedAt: json['updated_at'] ?? '', // تأكد من أن هذه القيم ليست فارغة
+  //     service: json['service'] != null ? Service.fromJson(json['service']) : null,
+  //     isSaved: json['isSaved'] ?? false,
+  //     savedAnnouncementID: json['savedAnnouncementID'] as int?,
+  //     fileStored: json['fileStored'] != null ? FileStored.fromJson(json['fileStored']) : null,
+  //   );
+  // }
   factory Announcement.fromJson(Map<String, dynamic> json) {
+    print('Creating Announcement from JSON: $json');
     return Announcement(
       id: json['id'],
-      serviceID: json['serviceID'],
+      serviceID: json['serviceID'] != null ? int.tryParse(json['serviceID'].toString()) : null,
       userID: json['userID'],
-      title: json['title'],
-      description: json['description'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
-      service: Service.fromJson(json['service']),
+      title: json['title'] ?? '', // استخدم قيمة افتراضية
+      description: json['description'] ?? '', // استخدم قيمة افتراضية
+      createdAt: json['created_at'] ?? '', // تأكد من أن هذه القيم ليست فارغة
+      updatedAt: json['updated_at'] ?? '', // تأكد من أن هذه القيم ليست فارغة
+      service: json['service'] != null ? Service.fromJson(json['service']) : null,
       isSaved: json['isSaved'] ?? false,
-      savedAnnouncementID: json['savedAnnouncementID'],
+      savedAnnouncementID: json['savedAnnouncementID'] as int?,
+      files: json['file'] != null ? (json['file'] as List).map((i) => FileStored.fromJson(i)).toList() : null,
+    );
+  }
+
+
+}
+
+class FileStored {
+  int? id;
+  int? announcementID;
+  String fileName;
+  String filePath;
+  String createdAt;
+  String updatedAt;
+
+  FileStored({
+    this.id,
+    this.announcementID,
+    required this.fileName,
+    required this.filePath,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory FileStored.fromJson(Map<String, dynamic> json) {
+    return FileStored(
+      id: json['id'],
+      announcementID: json['announcementID'],
+      fileName: json['fileName'] ?? '',
+      filePath: json['filePath'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      updatedAt: json['updated_at'] ?? '',
     );
   }
 }
+
 
 class Service {
   final int id;
@@ -355,3 +446,45 @@ class SavedAnnouncement {
 }
 
 
+
+//اوعك تحذفيه
+/*class Announcement {
+  final int id;
+   int? serviceID;
+  final int userID;
+  final String title;
+  final String description;
+   String? createdAt;
+   String? updatedAt;
+   Service? service;
+  bool isSaved;
+  int? savedAnnouncementID;
+
+  Announcement({
+    required this.id,
+    this.serviceID,
+    required this.userID,
+    required this.title,
+    required this.description,
+    this.createdAt,
+    this.updatedAt,
+    this.service,
+    this.isSaved = false,
+    this.savedAnnouncementID,
+  });
+
+  factory Announcement.fromJson(Map<String, dynamic> json) {
+    return Announcement(
+      id: json['id'],
+      serviceID: json['serviceID'],
+      userID: json['userID'],
+      title: json['title'],
+      description: json['description'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+      service: Service.fromJson(json['service']),
+      isSaved: json['isSaved'] ?? false,
+      savedAnnouncementID: json['savedAnnouncementID'],
+    );
+  }
+}*/
